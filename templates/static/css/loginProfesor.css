@@ -5,3 +5,33 @@ body{
     background-size:cover;
     background-repeat: no-repeat;
 }
+
+#ingreso{
+    text-align: center;
+    font-family: 'Indie Flower', cursivee;
+    font-weight: bold;
+    font-size: 80px;
+    color: rgb(227, 236, 146);
+    margin-top: -10px;
+    margin-bottom: -50px;
+}
+
+#loginProfesor{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200px;
+}
+
+.fancyText{
+    font-family: 'Indie Flower', cursivee;
+    font-weight: bold;
+    font-size: 40px;
+    color: rgb(227, 236, 146);
+}
+
+
+.btn{
+    margin-top: 10px;
+    margin-left: 10px;
+}

@@ -30,15 +30,17 @@ body{
     display: flex;
     align-items: center;
     margin-top: 100px;
-    margin-left: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
     text-align: center;
 }
 
 #contEst{
     display: flex;
     align-items: center;
-    margin-top: -400px;
-    margin-left: 700px;
+    margin-top: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
     text-align: center;
 }
 
@@ -63,7 +65,7 @@ body{
 }
 
 #labelProfesor{
-   font-size: 40px;
+   font-size: 50px;
    margin-top: -5px;
    margin-left: 10px;
    font-family: 'Indie Flower', cursivee;
@@ -71,7 +73,7 @@ body{
 }
 
 #labelEstudiante{
-   font-size: 40px;
+   font-size: 50px;
    margin-top: -5px;
    margin-left: 10px;
    font-family: 'Indie Flower', cursivee;
@@ -80,6 +82,10 @@ body{
 
 .flip:hover{
     animation: 0.5s linear flipping;
+}
+
+.highlight:hover{
+    animation: 1s linear infinite rebote ;
 }
 
 @keyframes flipping{
@@ -92,5 +98,36 @@ body{
     100%{
         transform: rotateX(0deg);
     }
+}
+
+@keyframes rebote{
+    0%{
+        transform: translateY(0px);
+    }
+
+    25%{
+        transform: translateY(-4px) ;
+    }
+
+    50%{
+        transform: translateY(0);
+    }
+    
+    75%{
+        transform: translateY(4px);
+    }
+
+    100%{
+        transform: translateY(0);
+    }
+
+}
+
+#loginSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
 }
 

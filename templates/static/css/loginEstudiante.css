@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+body{
+    background-image: url('/templates/images/bosque.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+
+#GridFlex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#ingreso{
+    text-align: center;
+    font-family: 'Indie Flower', cursivee;
+    font-weight: bold;
+    font-size: 80px;
+    color: rgb(227, 236, 146);
+    margin-top: -10px;
+    margin-bottom: -50px;
+}
+
+#matrizImagenes{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, 5vw);
+    grid-gap: 15px;
+    margin-top: 50px;
+    margin-left: 0px;
+    
+}
+
+.Fondito{
+    height: 300px;
+    width: 250px;
+    background-color: white;
+}
+
+#botonR{
+    position: absolute;
+    bottom: 0;
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+#btnRegresar{
+    width: 120px;
+    height: 80px;
+}
+
+.highlight:hover{
+    animation: 0.5s linear infinite rebote;
+}
+
+@keyframes rebote{
+    0%{
+        transform:rotate(0deg);
+    }
+
+    25%{
+        transform:rotate(5deg);
+    }
+
+    50%{
+        transform:rotate(0deg);
+    }
+    
+    75%{
+        transform:rotate(-5deg);
+    }
+
+    100%{
+        transform:rotate(0deg);
+    }
+
+}
+
+
