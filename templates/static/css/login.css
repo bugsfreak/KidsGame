@@ -1,32 +1,63 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 body{
-    background-image: url('/templates/images/FondoAnimales.jpg');
+    background-image: url('/templates/images/bosque.png');
     background-size:cover;
     background-repeat: no-repeat;
 }
 
+#bienvenida{
+    text-align: center;
+    font-family: 'Indie Flower', cursivee;
+    font-weight: bold;
+    font-size: 80px;
+    color: rgb(227, 236, 146);
+    margin-top: -10px;
+    margin-bottom: -50px;
+}
 
 #profesor{
     width: 300px;
-    height: 300px;
-    
+    height: 300px;  
+}
+
+#estudiante{
+    width: 300px;
+    height: 300px; 
 }
 
 #contProf{
     display: flex;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 100px;
     margin-left: 300px;
+    text-align: center;
+}
+
+#contEst{
+    display: flex;
+    align-items: center;
+    margin-top: -400px;
+    margin-left: 700px;
     text-align: center;
 }
 
 #linkProfesor{
     text-decoration: none;
-    color: black;
+    color: antiquewhite;
+}
+
+#linkEstudiante{
+    text-decoration: none;
+    color: antiquewhite;
 }
 
 #linkProfesor:hover{
+    text-decoration: underline;
+    text-decoration-color: black;
+}
+
+#linkEstudiante:hover{
     text-decoration: underline;
     text-decoration-color: black;
 }
@@ -37,5 +68,29 @@ body{
    margin-left: 10px;
    font-family: 'Indie Flower', cursivee;
    font-weight: bold;
+}
+
+#labelEstudiante{
+   font-size: 40px;
+   margin-top: -5px;
+   margin-left: 10px;
+   font-family: 'Indie Flower', cursivee;
+   font-weight: bold;
+}
+
+.flip:hover{
+    animation: 0.5s linear flipping;
+}
+
+@keyframes flipping{
+    0%{
+        transform: rotateX(0deg);
+    }
+    50%{
+        transform: rotateX(90deg);
+    }
+    100%{
+        transform: rotateX(0deg);
+    }
 }
 
