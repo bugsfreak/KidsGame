@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+body{
+    background-image: url('/templates/images/FondoAnimales.jpg');
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+
+
+#profesor{
+    width: 300px;
+    height: 300px;
+    
+}
+
+#contProf{
+    display: flex;
+    align-items: center;
+    margin-top: 80px;
+    margin-left: 300px;
+    text-align: center;
+}
+
+#linkProfesor{
+    text-decoration: none;
+    color: black;
+}
+
+#linkProfesor:hover{
+    text-decoration: underline;
+    text-decoration-color: black;
+}
+
+#labelProfesor{
+   font-size: 40px;
+   margin-top: -5px;
+   margin-left: 10px;
+   font-family: 'Indie Flower', cursivee;
+   font-weight: bold;
+}
+
