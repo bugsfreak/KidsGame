@@ -6,6 +6,16 @@ body{
     background-repeat: no-repeat;
 }
 
+#GridFlex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: auto;
+}
+
 #ingreso{
     text-align: center;
     font-family: 'Indie Flower', cursivee;
@@ -16,39 +26,20 @@ body{
     margin-bottom: -50px;
 }
 
-#loginProfesor{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 100px;
-}
-
-.form-group{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-
-
-.form-group > button{
-    margin-top: 30px;
+#matrizImagenes{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    grid-gap: 15px;
+    margin-top: 50px;
     margin-left: 0px;
-    height: 100px;
-    width: 300px;
-    background-color: grey;
+    
 }
 
-.fancyText{
-    font-family: 'Indie Flower', cursivee;
-    font-weight: bold;
-    font-size: 40px;
-    color: rgb(227, 236, 146);
-}
-
-
-.btn{
-    margin-top: 10px;
-    margin-left: 10px;
+.Fondito{
+    height: 150px;
+    width: 120px;
+    background-color: white;
 }
 
 #botonR{
@@ -64,10 +55,10 @@ body{
 }
 
 .highlight:hover{
-    animation: 0.5s linear infinite giro;
+    animation: 0.5s linear infinite rebote;
 }
 
-@keyframes giro{
+@keyframes rebote{
     0%{
         transform:rotate(0deg);
     }
@@ -89,3 +80,10 @@ body{
     }
 
 }
+
+.Fondito:hover{
+    transform: scale(1.5);
+    z-index: 2;
+}
+
+
