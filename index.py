@@ -1,4 +1,5 @@
 
+from crypt import methods
 import os
 import pymongo
 from flask import Flask, redirect, render_template, request,url_for
@@ -55,7 +56,16 @@ def principal():
 
     return render_template("layouts/")
 
-@app.route("/validacion", methods=["POST","GET"])
+@app.route("/validacionE", methods=["POST","GET"])
+def validarEstudiante():
+    '''
+    Función que valida que el estudiante ingresado exista
+    '''
+
+    
+    return redirect(url_for('login'))
+
+@app.route("/validacionP", methods=["POST","GET"])
 def validarProfesor():
     if (request.method == "POST"):
         usuario = request.form['usuario']
@@ -66,8 +76,6 @@ def validarProfesor():
         else:
             return redirect(url_for('loginProfesor'))
 
-
-    return redirect(url_for('loginProfesor'))
 
 if __name__ == "__main__":
     app.run(debug=True, host='localhost', port=9696)
