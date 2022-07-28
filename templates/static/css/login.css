@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 body{
-    background-image: url('/templates/images/bosque.png');
+    background-image: url('https://github.com/bugsfreak/KidsGame/blob/main/templates/images/bosque.png');
     background-size:cover;
     background-repeat: no-repeat;
 }

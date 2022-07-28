@@ -12,14 +12,14 @@
 <body>
     <h1 id="ingreso">Ingreso al sistema</h1>
     <section id="loginProfesor">
-        <form>
+        <form method="post" action="/validacion">
             <div class="form-group">
               <label for="exampleInputEmail1" class="fancyText">Usuario</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese usuario">
+              <input type="text" class="form-control" id="usuario" name="usuario" aria-describedby="emailHelp" placeholder="Ingrese usuario">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1" class="fancyText">Contraseña</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
+              <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="Contraseña">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-secondary"><p class="fancyText">Entrar</p></button>
@@ -28,7 +28,7 @@
     </section>
 
     <div id="botonR" class="highlight">
-      <a href="/templates/layouts/login.html">
+      <a href="/">
         <img
           id="btnRegresar"
           src="https://pngimage.net/wp-content/uploads/2018/05/arrow-cartoon-png-2.png"
