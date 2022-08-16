@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/templates/static/css/login.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <title>Principal</title>
 </head>
 
@@ -28,6 +28,14 @@
     </div>
     </section>
 
+    <div id="ingresoAdmin"> 
+        <a id="linkEstudiante" href="/loginAdministrador"> 
+            <img class="highlight" id="admin"
+                src="https://www.pngkey.com/png/full/128-1289588_3d-gear-icon-png-download-gear-icon.png">
+            <p id="labelEstudiante" class="flip"></p>
+        </a>
+    </div>
+    </section>
 </body>
 
 </html>
