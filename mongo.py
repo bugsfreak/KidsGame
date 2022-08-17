@@ -3,6 +3,7 @@ import pymongo
 import bcrypt
 
 
+
 class Mongo():
 
     '''
@@ -35,7 +36,6 @@ class Mongo():
 
     #Se obtiene la salt generada por bcrypt
     salt = bcrypt.gensalt()
-
 
     def creacionUsuario(self,id,nombre,apellido,f_nac,usuario,contrasenia, rol):
         '''
@@ -80,7 +80,7 @@ class Mongo():
 
 
 
-    def busquedaUsuario(self, usuario, contrasenia):
+    def busquedaUsuario(self, usuario, contrasenia,rol):
 
         '''
         Función que permite la busqueda del usuario en la base de datos en Mongodb
@@ -96,9 +96,11 @@ class Mongo():
         '''
         
         encodedContrasenia = contrasenia.encode('utf-8')
-        comprobarHashed = bcrypt.hashpw(contrasenia, self.salt)
+        comprobarHashed = bcrypt.hashpw(encodedContrasenia, self.salt)
 
-        query = {"$and":[{"usuario": usuario},{"contrasenia": comprobarHashed},{"estado": "Activo"}]}
+        rolID = self.coleccionRoles.find_one({"$and":[{"descripcion": rol},{"estado": 'Activo'}]})
+
+        query = {"$and":[{"usuario": usuario},{"contrasenia": comprobarHashed},{"rol_id": rolID._id},{"estado": "Activo"}]}
 
         if (self.coleccionPersonas.find_one(query)):
             return True

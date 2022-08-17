@@ -1,25 +1,15 @@
+from curses import flash
 import os
 import pymongo
 from flask import Flask, redirect, render_template, request,url_for
+import mongo 
 
-MONGOHOST = "localhost"
-MONGOPORT = "27017"
-MONGO_TIEMPO_FUERA = 1000
-
-MONGO_URI = "mongodb://" + MONGOHOST + ":" + MONGOPORT + "/"
-
-MONGO_BASEDATOS = "proyectoweb"
-PROFECOLLECTION = "profesor"
-ESTUCOLLECTION = "estudiante"
-
-cliente = pymongo.MongoClient(MONGO_URI,serverSelectionTimeoutMS=MONGO_TIEMPO_FUERA)
-baseDatos = cliente[MONGO_BASEDATOS]
-coleccionProfesor = baseDatos[PROFECOLLECTION]
-coleccionEstudiante = baseDatos[ESTUCOLLECTION]
 
 
 
 app = Flask(__name__)
+
+
 
 app._static_folder = os.path.abspath("templates/static/")
 
@@ -64,6 +54,11 @@ def validarEstudiante():
     return redirect(url_for('login'))
 
 
+@app.route("/panelAdministrador")
+def panelAdministrador():
+
+    return render_template("layouts/panelAdministrador.html")
+
 
 @app.route("/loginAdministrador")
 def loginAdministrador():
@@ -71,16 +66,23 @@ def loginAdministrador():
     return render_template("layouts/loginAdministrador.html")
 
 
-@app.route("/validacionP", methods=["POST","GET"])
-def validarProfesor():
+@app.route("/validacionA", methods=["POST","GET"])
+def validarAdmin():
     if (request.method == "POST"):
         usuario = request.form['usuario']
         contrasenia = request.form['contrasenia']
+        rol = request.form['rol']
         
-        if((coleccionProfesor.find_one({"usuario": usuario})) and (coleccionProfesor.find_one({"contraseña": contrasenia}))):
-            return redirect(url_for('index'))
+        validado = mongo.busquedaUsuario(usuario,contrasenia,rol)
+
+        if(validado == True):
+            redirect(url_for('panelAdministrador'))
         else:
-            return redirect(url_for('loginProfesor'))
+            flash('Error de credenciales')
+            redirect(url_for('loginAdministrador'))
+            
+        
+        
 
 
 if __name__ == "__main__":
