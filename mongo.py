@@ -62,11 +62,11 @@ class Mongo():
         hashed_contrasenia = bcrypt.hashpw(byteContrasenia, self.salt)
         
         #Se obtiene el id del rol
-        rolID = self.coleccionRoles.find_one({'$and':[{'descripcion': rol},{'estado': 'Activo'}]})
+        rolID = self.coleccionRoles.find_one({"$and":[{"descripcion": rol},{"estado": 'Activo'}]})
 
         #Documento con la estructura
-        persona = {'_id': id, 'info_personal': {'nombre': nombre, 'apellido': apellido, 'f_nac': f_nac},
-                    'usuario': usuario, 'contrasenia': hashed_contrasenia, 'rol_id': rolID._id, 'estado': 'Inactivo'}
+        persona = {"_id": id, 'info_personal': {"nombre": nombre, "apellido": apellido, "f_nac": f_nac},
+                    "usuario": usuario, "contrasenia": hashed_contrasenia, "rol_id": rolID._id, "estado": 'Inactivo'}
         
         #Se inserta dentro de la coleccion
         try:
@@ -98,7 +98,7 @@ class Mongo():
         encodedContrasenia = contrasenia.encode('utf-8')
         comprobarHashed = bcrypt.hashpw(contrasenia, self.salt)
 
-        query = {'$and':[{'usuario': usuario},{'contrasenia': comprobarHashed},{'estado': 'Activo'}]}
+        query = {"$and":[{"usuario": usuario},{"contrasenia": comprobarHashed},{"estado": "Activo"}]}
 
         if (self.coleccionPersonas.find_one(query)):
             return True
@@ -120,10 +120,10 @@ class Mongo():
         '''
 
 
-        query = {'usuario': usuario}
+        query = {"usuario": usuario}
 
         if(self.coleccionPersonas.find_one(query)):
-            self.coleccionPersonas.find_one_and_update(query, {'$set': {'estado': 'Inactivo'}})
+            self.coleccionPersonas.find_one_and_update(query, {"$set": {"estado": "Inactivo"}})
             return True
         else:
             return False
@@ -131,13 +131,14 @@ class Mongo():
 
     def obtenerUsuarios(self, rol):
 
-        queryRol = {'rol_id': rol}
+        queryRol = {"rol_id": rol}
 
 
     def mostrarPermisos(self):
 
         permisos = self.coleccionPermisos.find()
         return permisos;
+
 
     def probarHashed (self, contra1, contra2):
         encod1 = contra1.encode('utf-8')
