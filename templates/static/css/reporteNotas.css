@@ -1,0 +1,16 @@
+body {
+    background: -webkit-gradient(linear, left bottom, right top, from(#d4e4ce), to(#ccbbd1));
+    background: -webkit-linear-gradient(bottom left, #9aa192 0%, #6aaf4f 100%);
+    background: -moz-linear-gradient(bottom left, #f3f8ed 0%, #50ce1e 100%);
+    background: -o-linear-gradient(bottom left, #d1c6ca 0%, #287c06 100%);
+    background: linear-gradient(to top right, #c8cfc3 0%, #378618 100%);
+  }
+  .col-2 {
+    width: -webkit-calc((100% - 30px) / 2);
+    width: -moz-calc((100% - 30px) / 2);
+    width: calc((100% - 30px) / 2);
+  }
+
+  .tablë{
+  background-color: #c7b6bc;
+  }

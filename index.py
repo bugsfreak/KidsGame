@@ -1,15 +1,18 @@
-from curses import flash
+
+from math import perm
 import os
 import pymongo
 from flask import Flask, redirect, render_template, request,url_for
 import mongo 
 
-
+MONGO = mongo.Mongo()
+permisos = []
 
 
 app = Flask(__name__)
 
-
+#mn es la variable con la que se instanciara la clase de mongo
+mn = mongo.Mongo()
 
 app._static_folder = os.path.abspath("templates/static/")
 
@@ -29,12 +32,7 @@ def loginEstudiante():
     return render_template("layouts/loginEstudiante.html")
 
 
-@app.route("/loginProfesor")
-def loginProfesor():
-    '''
-    Funciòn que renderiza la página para el login de los profesores
-    '''
-    return render_template("layouts/loginProfesor.html")
+
 
 @app.route("/principal")
 def principal():
@@ -54,10 +52,29 @@ def validarEstudiante():
     return redirect(url_for('login'))
 
 
+
+# ------------------------ PARTE PROFESOR --------------------------
+
+@app.route("/loginProfesor")
+def loginProfesor():
+    '''
+    Funciòn que renderiza la página para el login de los profesores
+    '''
+    return render_template("layouts/loginProfesor.html")
+
+@app.route('/reporteNotas')
+def registroPersona():
+
+    return render_template("layouts/reporteNotas.html")  
+
+
+
+# ------------------------ PARTE ADMINISTRADOR -------------------------
+
 @app.route("/panelAdministrador")
 def panelAdministrador():
 
-    return render_template("layouts/panelAdministrador.html")
+    return render_template("layouts/panelAdministrador.html", permisos = permisos)
 
 
 @app.route("/loginAdministrador")
@@ -66,6 +83,19 @@ def loginAdministrador():
     return render_template("layouts/loginAdministrador.html")
 
 
+@app.route('/listaPermisos')
+def listaPermisos():
+    permisos = MONGO.mostrarPermisos()
+    
+    return render_template("layouts/listaPermisos.html", permisos = permisos)
+
+
+@app.route('/registroPersona')
+def registroPersona():
+
+    return render_template("layouts/registroPersona.html")
+
+ 
 @app.route("/validacionA", methods=["POST","GET"])
 def validarAdmin():
     if (request.method == "POST"):
@@ -73,16 +103,17 @@ def validarAdmin():
         contrasenia = request.form['contrasenia']
         rol = request.form['rol']
         
-        validado = mongo.busquedaUsuario(usuario,contrasenia,rol)
+        
+        validado = mn.validarUsuario(usuario, contrasenia, rol)
 
         if(validado == True):
             redirect(url_for('panelAdministrador'))
         else:
-            flash('Error de credenciales')
             redirect(url_for('loginAdministrador'))
             
+            
         
-        
+# --------------------- MAIN FLASK -----------------------        
 
 
 if __name__ == "__main__":
