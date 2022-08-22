@@ -12,3 +12,7 @@ listPermisos = []w
 for idx in range(2):
     listPermisos.append(permisos[idx])
 '''
+
+rol = x.idrol("Estudiante")
+
+print(rol["_id"])

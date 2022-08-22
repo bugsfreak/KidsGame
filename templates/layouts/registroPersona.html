@@ -18,18 +18,24 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title">Registro</h2>
-                    <form method="POST">
+                    <form method="POST" action="/ingreso">
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
+                                    <label class="label">ID </label>
+                                    <input class="input--style-4" name="id" type="text" name="first_name">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
                                     <label class="label">Nombres </label>
-                                    <input class="input--style-4" type="text" name="first_name">
+                                    <input class="input--style-4" name="nombre" type="text" name="first_name">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Apellidos</label>
-                                    <input class="input--style-4" type="text" name="last_name">
+                                    <input class="input--style-4" name="apellido" type="text" name="last_name">
                                 </div>
                             </div>
                         </div>
@@ -38,7 +44,7 @@
                                 <div class="input-group">
                                     <label class="label">Fecha Nacimiento </label>
                                     <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="text" name="birthday">
+                                        <input class="input--style-4 js-datepicker" type="text" name="f_nac">
                                         <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
                                     </div>
                                 </div>
@@ -47,16 +53,16 @@
                                 <div class="input-group">
                                     <label class="label">Rol</label>
                                     <div class="p-t-10">
-                                        <label class="radio-container m-r-45">Admin
-                                            <input type="radio" checked="checked" name="gender">
+                                        <label class="radio-container m-r-45">Administrador
+                                            <input type="radio" name="rol" value="Administrador">
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="radio-container">Docente
-                                            <input type="radio" name="gender">
+                                            <input type="radio" name="rol" value="Docente">
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="radio-container">Estudiante
-                                            <input type="radio" name="gender">
+                                            <input type="radio" name="rol" value="Estudiante">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -72,27 +78,28 @@
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">celular</label>
-                                    <input class="input--style-4" type="text" name="phone">
+                                    <label class="label">Celular</label>
+                                    <input class="input--style-4" type="text" name="telefono">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <div class="col-2">
                                         <div class="input-group">
-                                            <label class="label">usuario</label>
+                                            <label class="label">Usuario</label>
                                             <input class="input--style-4" type="text" name="usuario">
                                         </div>
                                     </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">contraseña</label>
-                                    <input class="input--style-4" type="password" name="contraseña">
+                                    <label class="label">Contraseña</label>
+                                    <input class="input--style-4" type="password" name="contrasenia">
                                 </div>
                             </div>
                         </div>
                         </div>
+
                         <!--
                         <div class="input-group">
                             <label class="label"></label>
@@ -107,8 +114,14 @@
                             </div>
                         </div>
                          -->
+                        <div class="flashes">
+                            {% for message in get_flashed_messages() %}
+                              {{ message }}
+                            {% endfor %}
+                        </div>
+
                         <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Guardar</button>
+                            <button class="btn btn--blue" type="submit">Guardar</button>
                         </div> 
                        
                     </form>
@@ -117,7 +130,7 @@
         </div>
 
         <section id="botonRegresar">
-            <div><button class="btn  btn--blue"> Regresar </button> </div>
+            <div><a href="/panelAdministrador"><button class="btn  btn--blue"> Regresar </button></a> </div>
         </section>
     </div>
 

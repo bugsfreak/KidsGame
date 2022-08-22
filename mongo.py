@@ -40,7 +40,7 @@ class Mongo():
     #Se obtiene la salt generada por bcrypt
     salt = bcrypt.gensalt()
 
-    def creacionUsuario(self,id,nombre,apellido,f_nac,telefono,usuario,contrasenia, rol):
+    def creacionUsuario(self,id,nombre,apellido,f_nac,telefono, email,usuario,contrasenia, rol):
         '''
         Funcion que es usada para ingresar nuevos profesores a la base de datos
 
@@ -57,6 +57,8 @@ class Mongo():
             none
         
         '''
+        coleccionPersonas = self.baseDatos.personas
+        coleccionRoles = self.baseDatos.roles
 
         #Encode a la contraseña en base a utf-8
         byteContrasenia = contrasenia.encode('utf-8')
@@ -65,15 +67,15 @@ class Mongo():
         hashed_contrasenia = bcrypt.hashpw(byteContrasenia, self.salt)
         
         #Se obtiene el id del rol
-        rolID = self.coleccionRoles.find_one({"$and":[{"descripcion": rol},{"estado": 'Activo'}]})
+        rolID = coleccionRoles.find_one({"$and":[{"descripcion": rol},{"estado": 'Activo'}]})
 
         #Documento con la estructura
-        persona = {"_id": id, 'info_personal': {"nombre": nombre, "apellido": apellido, "f_nac": f_nac, "telefono": telefono},
-                    "usuario": usuario, "contrasenia": hashed_contrasenia, "rol_id": rolID._id, "estado": 'Inactivo'}
+        persona = {"_id": id, 'info_personal': {"nombre": nombre, "apellido": apellido, "f_nac": f_nac, "telefono": telefono, "email": email},
+                    "usuario": usuario, "contrasenia": hashed_contrasenia, "rol_id": rolID["_id"], "estado": 'Inactivo'}
         
         #Se inserta dentro de la coleccion
         try:
-            insercion = self.coleccionPersonas.insert_one(persona)
+            insercion = coleccionPersonas.insert_one(persona)
             return 'Se ha insertado'
         except:
             return 'El id ya existe'
@@ -97,15 +99,17 @@ class Mongo():
             Boolean: True o False
         
         '''
-        
+        coleccionPersonas = self.baseDatos.personas
+        coleccionRoles = self.baseDatos.roles
+
         encodedContrasenia = contrasenia.encode('utf-8')
         comprobarHashed = bcrypt.hashpw(encodedContrasenia, self.salt)
 
-        rolID = self.coleccionRoles.find_one({"$and":[{"descripcion": rol},{"estado": 'Activo'}]})
+        rolID = coleccionRoles.find_one({"$and":[{"descripcion": rol},{"estado": 'Activo'}]})
 
-        query = {"$and":[{"usuario": usuario},{"contrasenia": comprobarHashed},{"rol_id": rolID._id},{"estado": "Activo"}]}
+        query = {"$and":[{"usuario": usuario},{"contrasenia": comprobarHashed},{"rol_id": rolID["_id"]},{"estado": "Activo"}]}
         
-        if (self.coleccionPersonas.find_one(query)):
+        if (coleccionPersonas.find_one(query)):
             return True
         else:
             return False
@@ -165,6 +169,11 @@ class Mongo():
 
         return permisos
 
+
+    def idrol(self,rol):
+        coleccionRoles = self.baseDatos.roles
+        rolID = coleccionRoles.find_one({"$and":[{"descripcion": rol},{"estado": 'Activo'}]})
+        return rolID
 
 
     # Código de prueba para el hash

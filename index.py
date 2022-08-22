@@ -1,8 +1,7 @@
 
-from math import perm
 import os
 import pymongo
-from flask import Flask, redirect, render_template, request,url_for
+from flask import Flask, redirect, render_template, request,url_for,Markup, flash
 import mongo 
 
 MONGO = mongo.Mongo()
@@ -30,8 +29,6 @@ def loginEstudiante():
     Función que retorna la página de login para los estudiantes
     '''
     return render_template("layouts/loginEstudiante.html")
-
-
 
 
 @app.route("/principal")
@@ -86,15 +83,36 @@ def loginAdministrador():
 @app.route('/listaPermisos')
 def listaPermisos():
     permisos = MONGO.mostrarPermisos()
-    
     return render_template("layouts/listaPermisos.html", permisos = permisos)
 
 
 @app.route('/registroPersona')
-def registroPersona():
+def registro():
 
     return render_template("layouts/registroPersona.html")
 
+
+@app.route('/ingreso', methods=['POST'])
+def ingreso():
+
+    if(request.method == "POST"):
+        id = request.form['id']
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        f_nac = request.form['f_nac']  
+        telefono = request.form['telefono']
+        email = request.form['email']
+        usuario = request.form['usuario']  
+        contrasenia = request.form['contrasenia']
+        rol = request.form['rol']
+
+        
+        MONGO.creacionUsuario(id,nombre,apellido,f_nac,telefono,email,usuario,contrasenia,rol)
+            
+        
+
+        return redirect(url_for('registro'))
+        
  
 @app.route("/validacionA", methods=["POST","GET"])
 def validarAdmin():
@@ -111,7 +129,7 @@ def validarAdmin():
         else:
             redirect(url_for('loginAdministrador'))
             
-            
+
         
 # --------------------- MAIN FLASK -----------------------        
 
