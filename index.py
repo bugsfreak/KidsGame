@@ -15,6 +15,9 @@ mn = mongo.Mongo()
 
 app._static_folder = os.path.abspath("templates/static/")
 
+# --------------- PARTE GENERAL Y ESTUDIANTE -------------------
+
+
 @app.route("/")
 def index():
     '''
@@ -71,7 +74,7 @@ def registroPersona():
 @app.route("/panelAdministrador")
 def panelAdministrador():
 
-    return render_template("layouts/panelAdministrador.html", permisos = permisos)
+    return render_template("layouts/panelAdministrador.html")
 
 
 @app.route("/loginAdministrador")
@@ -83,7 +86,12 @@ def loginAdministrador():
 @app.route('/listaPermisos')
 def listaPermisos():
     permisos = MONGO.mostrarPermisos()
-    return render_template("layouts/listaPermisos.html", permisos = permisos)
+    return render_template("layouts/tablaPermisos.html", permisos = permisos)
+
+@app.route('/listaRoles')
+def listaRoles():
+    roles = MONGO.mostrarRoles()
+    return render_template("layouts/tablaRoles.html", roles = roles)
 
 
 @app.route('/registroPersona')
@@ -106,11 +114,8 @@ def ingreso():
         contrasenia = request.form['contrasenia']
         rol = request.form['rol']
 
-        
         MONGO.creacionUsuario(id,nombre,apellido,f_nac,telefono,email,usuario,contrasenia,rol)
-            
         
-
         return redirect(url_for('registro'))
         
  

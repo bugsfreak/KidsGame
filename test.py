@@ -13,6 +13,6 @@ for idx in range(2):
     listPermisos.append(permisos[idx])
 '''
 
-rol = x.idrol("Estudiante")
+roles = x.mostrarRoles()
 
-print(rol["_id"])
+

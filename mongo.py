@@ -148,8 +148,7 @@ class Mongo():
         Returns:
             roles (list)
         '''
-        coleccion = self.baseDatos.profesores
-
+        coleccion = self.baseDatos.roles
         roles = list(coleccion.find())
         return roles
 
