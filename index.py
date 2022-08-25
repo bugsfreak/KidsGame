@@ -78,7 +78,7 @@ def panelAdministrador():
     '''
     Dirige a la página principal del administrador
     '''
-    if(Rol_logeado == "Administrador"):
+    if(Rol_logeado == ""):
         return render_template("layouts/panelAdministrador.html")
     else:
         return redirect(url_for("loginAdministrador"))
