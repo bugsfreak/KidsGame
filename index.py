@@ -1,4 +1,3 @@
-
 import os
 import pymongo
 from flask import Flask, redirect, render_template, request,url_for,Markup, flash
@@ -129,10 +128,16 @@ def registroAula():
 
     return render_template("layouts/registroAulas.html")
 
-@app.route('/regA')
+@app.route('/regA', methods=["POST"])
 def regA():
+    if(request.method == "POST"):
+        id = request.form["id"]
+        nombre = request.form["nombre"]
+        max = request.form["max"]
 
-    return redirect(url_for('registroAula'))
+        MONGO.registrarAula(id,nombre,max)
+        return redirect(url_for('registroAula'))
+    
 
 
 @app.route('/matricularEstudiante')
