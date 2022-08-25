@@ -1,0 +1,23 @@
+{
+	"_id": 1,
+	"descripcion": "Estudiante",
+	"estado": "Activo"
+}
+{
+	"_id": 2,
+	"descripcion": "Profesor",
+	"permisos":{
+		   	"permiso1_id": 1
+		   },
+	"estado": "Activo"
+}
+{
+	"_id": 3,
+	"descripcion": "Administrador",
+	"permisos":{
+		   	"permiso1_id": 1,
+			"permiso2_id": 2,
+			"permiso3_id": 3
+		   },
+	"estado": "Activo"
+}

@@ -1,0 +1,13 @@
+
+{
+	"_id": 1,
+	"descripcion": "Lectura"
+}
+{
+	"_id": 2,
+	"descripcion": "Escritura"
+}
+{
+	"_id": 3,
+	"descripcion": "Eliminación"
+}
