@@ -76,7 +76,6 @@ class Mongo():
         #Se inserta dentro de la coleccion
         try:
             insercion = coleccionPersonas.insert_one(persona)
-            return 'Se ha insertado'
         except:
             return 'El id ya existe'
 
@@ -143,17 +142,35 @@ class Mongo():
             Boolean: True o False
         
         '''
-
+        coleccionPersonas = self.baseDatos.personas
 
         query = {"usuario": usuario}
 
-        if(self.coleccionPersonas.find_one(query)):
-            self.coleccionPersonas.find_one_and_update(query, {"$set": {"estado": "Inactivo"}})
+        if(coleccionPersonas.find_one(query)):
+            coleccionPersonas.find_one_and_update(query, {"$set": {"estado": "Inactivo"}})
             return True
         else:
             return False
 
 
+    def restarCapacidad(self,idAula):
+        '''
+        Función para ir restando la capacidad del aula
+        '''
+
+        coleccionAulas = self.baseDatos.aulas
+        query = {"_id": idAula}
+
+        if(coleccionAulas.find_one(query)):
+            aula = coleccionAulas.find_one(query)
+            capacidad = aula["max"]
+            capacidad -= 1
+            coleccionAulas.find_one_and_update(query,{"$set": {"max": capacidad}})
+            return True
+        else:
+            return False
+
+        
     def mostrarRoles(self):
         '''
         Función que retorna la colección de roles 

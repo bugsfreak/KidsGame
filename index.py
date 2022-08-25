@@ -9,6 +9,7 @@ permisos = []
 
 
 app = Flask(__name__)
+app.secret_key = "super secret key"
 
 #mn es la variable con la que se instanciara la clase de mongo
 mn = mongo.Mongo()
@@ -167,6 +168,8 @@ def ingreso():
         except:
             flash("Existe un inconveniente, y no se pudo ingresar")
             print("No se pudo ingresar")
+            return redirect(url_for('registro'))
+
         
             
 
