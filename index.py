@@ -15,6 +15,8 @@ mn = mongo.Mongo()
 
 app._static_folder = os.path.abspath("templates/static/")
 
+Rol_logeado = ''
+
 # --------------- PARTE GENERAL Y ESTUDIANTE -------------------
 
 
@@ -40,7 +42,7 @@ def principal():
     Función que retorna la página principal para el profesor
     '''
 
-    return render_template("layouts/")
+    return render_template("layouts/login.html")
 
 @app.route("/validacionE", methods=["POST","GET"])
 def validarEstudiante():
@@ -73,14 +75,35 @@ def registroPersona():
 
 @app.route("/panelAdministrador")
 def panelAdministrador():
-
-    return render_template("layouts/panelAdministrador.html")
+    '''
+    Dirige a la página principal del administrador
+    '''
+    if(Rol_logeado == "Administrador"):
+        return render_template("layouts/panelAdministrador.html")
+    else:
+        return redirect(url_for("loginAdministrador"))
+    
 
 
 @app.route("/loginAdministrador")
 def loginAdministrador():
-
+    '''
+    Se dirige al login del administrador
+    '''
     return render_template("layouts/loginAdministrador.html")
+
+@app.route("/validarA", methods=["POST"])
+def validarA():
+    if(request.method == "POST"):
+        usuario = request.form["usuario"]
+        contrasenia = request.form["contrasenia"]
+        rol = "Administrador"
+        val_ingreso = MONGO.validarUsuario(usuario,contrasenia,rol)
+        if(val_ingreso == True):
+            Rol_logeado = "Administrador"
+            return redirect(url_for('panelAdministrador'))
+        else:
+            return redirect(url_for('loginAdministrador'))
 
 
 @app.route('/listaPermisos')
@@ -100,6 +123,31 @@ def registro():
     return render_template("layouts/registroPersona.html")
 
 
+@app.route('/registroAula')
+def registroAula():
+
+    return render_template("layouts/registroAulas.html")
+
+@app.route('/regA')
+def regA():
+
+    return redirect(url_for('registroAula'))
+
+
+@app.route('/matricularEstudiante')
+def matricularEstudiante():
+
+    return render_template("layours/matriculacion.html")
+
+@app.route('/matricular', methods=["POST"])
+def matricular():
+    if(request.method == "POST"):
+
+
+        return redirect(url_for('matricularEstudiante'))
+
+
+
 @app.route('/ingreso', methods=['POST'])
 def ingreso():
 
@@ -113,26 +161,13 @@ def ingreso():
         usuario = request.form['usuario']  
         contrasenia = request.form['contrasenia']
         rol = request.form['rol']
-
-        MONGO.creacionUsuario(id,nombre,apellido,f_nac,telefono,email,usuario,contrasenia,rol)
+        try:
+            MONGO.creacionUsuario(id,nombre,apellido,f_nac,telefono,email,usuario,contrasenia,rol)
+            return redirect(url_for('registro'))
+        except:
+            flash("Existe un inconveniente, y no se pudo ingresar")
+            print("No se pudo ingresar")
         
-        return redirect(url_for('registro'))
-        
- 
-@app.route("/validacionA", methods=["POST","GET"])
-def validarAdmin():
-    if (request.method == "POST"):
-        usuario = request.form['usuario']
-        contrasenia = request.form['contrasenia']
-        rol = request.form['rol']
-        
-        
-        validado = mn.validarUsuario(usuario, contrasenia, rol)
-
-        if(validado == True):
-            redirect(url_for('panelAdministrador'))
-        else:
-            redirect(url_for('loginAdministrador'))
             
 
         

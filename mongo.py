@@ -104,9 +104,13 @@ class Mongo():
 
         encodedContrasenia = contrasenia.encode('utf-8')
         comprobarHashed = bcrypt.hashpw(encodedContrasenia, self.salt)
-
+        print(comprobarHashed)
         rolID = coleccionRoles.find_one({"$and":[{"descripcion": rol},{"estado": 'Activo'}]})
+        query1 = {"usuario": usuario}
 
+        cons = coleccionPersonas.find_one(query1)
+        hash = cons["contrasenia"]
+        print(hash)
         query = {"$and":[{"usuario": usuario},{"contrasenia": comprobarHashed},{"rol_id": rolID["_id"]},{"estado": "Activo"}]}
         
         if (coleccionPersonas.find_one(query)):
@@ -114,6 +118,18 @@ class Mongo():
         else:
             return False
 
+    def registrarAula(self, id, nombre, max):
+        '''
+        Función para regisrar un Aula
+        '''
+
+
+        coleccionAulas = self.baseDatos.aulas
+
+        query = {"_id": id, "nombre": nombre, "max": max}
+
+        insertado = coleccionAulas.insert_one(query)
+        print(insertado)
 
     def desactivarUsuario(self, usuario):
         '''
