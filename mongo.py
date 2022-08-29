@@ -39,7 +39,9 @@ class Mongo():
 
     #Se obtiene la salt generada por bcrypt
     salt = bcrypt.gensalt()
-
+  
+    # -------------------------- CREACIÒN -----------------------------
+    
     def creacionUsuario(self,id,nombre,apellido,f_nac,telefono, email,usuario,contrasenia, rol):
         '''
         Funcion que es usada para ingresar nuevos profesores a la base de datos
@@ -82,7 +84,81 @@ class Mongo():
         #Se retorna un mensaje por la terminal
         print(insercion)
 
+    def registrarAula(self, id, nombre, max):
+        """
+        Función para registrar el aula
 
+        Args:
+            id (int): id del aula
+            nombre (string): nombre del aula
+            max (int): capacidad del aula
+        """
+
+
+        coleccionAulas = self.baseDatos.aulas
+
+        query = {"_id": id, "nombre": nombre, "max": max}
+
+        insertado = coleccionAulas.insert_one(query)
+        print(insertado)
+    
+
+    def registroAnioLectivo(self, id, nombre, fechaInicio, fechaFin):
+        """
+        Función para la creación de un año lectivo
+
+        Args:
+            id (int): _description_
+            fechaInicio (date): fecha de inicio del año lectivo
+            fechaFin (date): fecha de final del año lectivo
+
+        Returns:
+            insercion: none
+        """
+        coleccionAnio = self.baseDatos.aniolectivo
+        query = {"_id": id,"nombre": nombre,"fechaInicio": fechaInicio, "fechaFin": fechaFin, "estado": "Activo"}
+        insercion = coleccionAnio.insert_one(query)
+        
+        return insercion
+
+
+    def registroMateria(self, id, descripcion):
+        """
+        Función para la creación de una materia del aplicativo
+
+        Args:
+            id (int): id de la materia
+            descripcion (string): nombre de la materia
+
+        Returns:
+            insercion: none
+        """
+        coleccionMateria = self.baseDatos.materias
+        query = {"_id": id, "descripcion":descripcion}
+        insercion = coleccionMateria.insert_one(query)
+
+        return insercion
+
+    def registroRangoNotas(self,id,notaMin,notaMax):
+        """
+        Función que permite el registro de las notas, la nota minima y máxima, estarán establecidas en el año lectivo
+
+        Args:
+            id (int): id escogido por el administrador
+            notaMin (float): Nota mínima
+            notaMax (float): Nota máxima
+
+        Returns:
+            insercion: none
+        """
+        coleccionRangoNotas = self.baseDatos.rangonotas
+        query = {"_id": id, "notaMin": notaMin, "notaMax": notaMax, "estado": "Activo"}
+        insercion = coleccionRangoNotas.insert_one(query)
+
+        return insercion
+
+
+    #--------------------- VALIDACIÓN -----------------------
 
     def validarUsuario(self, usuario, contrasenia,rol):
 
@@ -117,19 +193,7 @@ class Mongo():
         else:
             return False
 
-    def registrarAula(self, id, nombre, max):
-        '''
-        Función para regisrar un Aula
-        '''
-
-
-        coleccionAulas = self.baseDatos.aulas
-
-        query = {"_id": id, "nombre": nombre, "max": max}
-
-        insertado = coleccionAulas.insert_one(query)
-        print(insertado)
-
+    
     def desactivarUsuario(self, usuario):
         '''
         Función que permite desactivar un usuario
@@ -203,9 +267,51 @@ class Mongo():
 
 
     def idrol(self,rol):
+        '''
+        Función que retorna el id del rol
+        '''
         coleccionRoles = self.baseDatos.roles
         rolID = coleccionRoles.find_one({"$and":[{"descripcion": rol},{"estado": 'Activo'}]})
         return rolID
+
+    
+    def desactivarAnioLectivo(self,id):
+        """
+        Función para desactivar el año lectivo 
+
+        Args:
+            id (int): id del año lectivo
+        
+        Returns:
+            actualizacion: none
+        """
+
+        coleccionAnio = self.baseDatos.aniolectivo
+        query = {"_id":id}
+        query2 = {"$set":{"estado":"Inactivo"}}
+        actualizacion = coleccionAnio.find_one_and_update(query,query2)
+
+        return actualizacion
+
+    def desactivarNotas(self,id):
+        """
+        Función para desactivar el rango de notas
+
+        Args:
+            id (int): id del rango de notas
+
+        Returns:
+            actualizacion: none
+        """
+
+        coleccionNotas = self.baseDatos.rangonotas
+        query = {"_id":id}
+        query2 = {"$set":{"estado":"Inactivo"}}
+        actualizacion = coleccionNotas.find_one_and_update(query,query2)
+
+        return actualizacion
+    
+    
 
 
     # Código de prueba para el hash

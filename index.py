@@ -119,8 +119,8 @@ def listaRoles():
 
 @app.route('/registroPersona')
 def registro():
-
-    return render_template("layouts/registroPersona.html")
+    roles  = MONGO.mostrarRoles()
+    return render_template("layouts/registroPersona.html", roles = roles)
 
 
 @app.route('/registroAula')
@@ -134,16 +134,19 @@ def regA():
         id = request.form["id"]
         nombre = request.form["nombre"]
         max = request.form["max"]
-
-        MONGO.registrarAula(id,nombre,max)
-        return redirect(url_for('registroAula'))
+        if (id == "" or nombre == "" or max == ""):
+            flash("Hay campos vacios")
+            return redirect(url_for('registroAula'))
+        else:
+            MONGO.registrarAula(id,nombre,max)
+            return redirect(url_for('registroAula'))
     
 
 
 @app.route('/matricularEstudiante')
 def matricularEstudiante():
 
-    return render_template("layours/matriculacion.html")
+    return render_template("layouts/matriculacion.html")
 
 @app.route('/matricular', methods=["POST"])
 def matricular():
@@ -176,7 +179,33 @@ def ingreso():
             return redirect(url_for('registro'))
 
         
-            
+    
+@app.route('/registroAnioLectivo')
+def registroAnioLectivo():
+
+    return render_template('layouts/registroAnioLectivo.html')
+
+
+@app.route('/registroAL', methods=["POST"])
+def registroAL():
+    if(request.method == "POST"):
+        id = request.form["id"]
+        nombre = request.form["nombre"]
+        f_inicio = request.form["f_inicio"]
+        f_fin = request.form["f_fin"]
+        try:
+            if(id == "" or nombre == "" or f_inicio == "" or f_fin == ""):
+                flash("Hay campos vacios")
+            else:    
+                MONGO.registroAnioLectivo(id,nombre,f_inicio,f_fin)
+                return redirect(url_for('registroAnioLectivo'))
+        except:
+            flash("Existe un inconveniente y no se pudo ingresar")
+            return redirect(url_for('registoAnioLectivo'))
+
+
+    
+
 
         
 # --------------------- MAIN FLASK -----------------------        
