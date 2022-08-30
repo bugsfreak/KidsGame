@@ -1,0 +1,13 @@
+{
+	"_id": 1728748239,
+	"info_personal":{
+			    "nombre": "Juan",
+			    "apellido": "García",
+			    "f_nac": "1982-11-02"		
+			},
+	"usuario": "juanga01",
+	"contrasenia": "sample1",
+	"rol_id": 3,
+	"estado": "Activo"
+
+}

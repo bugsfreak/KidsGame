@@ -1,0 +1,13 @@
+[{
+  "_id": "1",
+  "nombre": "Gatitos",
+  "paralelo": "A",
+  "nivel": "Primero",
+  "max": "10"
+},{
+  "_id": "2",
+  "nombre": "Ositos",
+  "paralelo": "B",
+  "nivel": "Primero",
+  "max": "10"
+}]

@@ -1,0 +1,37 @@
+[{
+  "_id": "1724784952",
+  "info_personal": {
+    "nombre": "Juan",
+    "apellido": "Salve",
+    "f_nac": "25/02/1982",
+    "telefono": "0961441232",
+    "email": "juansalve@hotmail.com"
+  },
+  "usuario": "juansa01",
+  "contrasenia": {
+    "$binary": {
+      "base64": "JDJiJDEyJFBnSW0vMVRpVVd5VDhMd3FpYXViUi5PTS85eDl6ekJ4ODhlNDdDUkwuYVJSMWlvdGgvdS9l",
+      "subType": "00"
+    }
+  },
+  "rol_id": 3,
+  "estado": "Inactivo"
+},{
+  "_id": "1724784252",
+  "info_personal": {
+    "nombre": "Pedro",
+    "apellido": "Benavides",
+    "f_nac": "23/02/1992",
+    "telefono": "0981611341",
+    "email": "pedrobenavides@hotmail.com"
+  },
+  "usuario": "pedro01",
+  "contrasenia": {
+    "$binary": {
+      "base64": "JDJiJDEyJGlubW8vaG53VU5vYkhIbFVyYkt3NC5waGpRY1YwV1AwL3pSb0tiZHJ4dU1kR0ZDdUFIY1Uu",
+      "subType": "00"
+    }
+  },
+  "rol_id": 3,
+  "estado": "Inactivo"
+}]

@@ -3,7 +3,8 @@ from itertools import permutations
 from warnings import catch_warnings
 import pymongo 
 import bcrypt
-
+import basehash
+from cryptography.fernet import Fernet
 
 
 
@@ -158,6 +159,31 @@ class Mongo():
         return insercion
 
 
+    def registroMatricula(self,id_alumno,id_aula,f_matricula):
+        """
+        Función que se usa para matricular a un estudiante
+
+        Args:
+            id_alumno (_type_): _description_
+            id_aula (_type_): _description_
+            f_matricula (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+
+
+        coleccionMatriculas = self.baseDatos.matriculas
+        query = {"id_alumno": id_alumno, "id_aula": id_aula, "f_matricula": f_matricula}
+        restado = self.restarCapacidad(id_aula)
+        if(restado == True):
+            insercion = coleccionMatriculas.insert_one(query)
+            return insercion
+        else:
+            return "No existe aula"
+
+        
+
     #--------------------- VALIDACIÓN -----------------------
 
     def validarUsuario(self, usuario, contrasenia,rol):
@@ -265,6 +291,47 @@ class Mongo():
 
         return permisos
 
+    def mostrarPersonas(self):
+        """
+        Función para mostrar personas
+
+        Returns:
+            personas: Lista de las personas extraidas de mongo
+        """
+
+        coleccion = self.baseDatos.personas
+        personas = list(coleccion.find())
+
+        return personas
+
+    def mostrarAulas(self):
+        """
+        Función que retorna la lista de aulas
+
+        Returns:
+            aulas:  Lista de las aulas extraidas de mongo
+        """
+
+
+        coleccion = self.baseDatos.aulas
+        aulas = list(coleccion.find())
+
+        return aulas
+
+    def buscarAula(self,nombre):
+        """
+        Función que busca el aula
+
+        Args:
+            nombre (string): Nombre del aula
+
+        Returns:
+            idAula: retorna el id del aula
+        """
+        coleccion = self.baseDatos.aulas
+        idAula = list(coleccion.find_one({"nombre": nombre}))
+        idAula = idAula["_id"]
+        return idAula
 
     def idrol(self,rol):
         '''
@@ -327,6 +394,14 @@ class Mongo():
 
         if(hash1 == hash2):
             print("Son iguales")
+
+
+    def getKey(self):
+        key = Fernet.generate_key()
+        return key
+
+   
+
 
 '''
 if __name__ == '__main__':

@@ -15,7 +15,5 @@ for idx in range(2):
 
 #roles = x.mostrarRoles()
 
-existe = x.validarUsuario("pedro01","pedro01","Administrador")
 
-print(existe)
 

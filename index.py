@@ -2,6 +2,7 @@ import os
 import pymongo
 from flask import Flask, redirect, render_template, request,url_for,Markup, flash
 import mongo 
+from datetime import date
 
 MONGO = mongo.Mongo()
 permisos = []
@@ -53,6 +54,17 @@ def validarEstudiante():
     
     return redirect(url_for('login'))
 
+#Renderización de los juegos
+@app.route("/juego1")
+def juego1():
+
+    return render_template('layouts/figuras.html')
+
+@app.route("/juego2")
+def juego2():
+
+    return render_template('layouts/adivinar.html')
+
 
 
 # ------------------------ PARTE PROFESOR --------------------------
@@ -73,6 +85,7 @@ def registroPersona():
 
 # ------------------------ PARTE ADMINISTRADOR -------------------------
 
+#Página principal para el administrador
 @app.route("/panelAdministrador")
 def panelAdministrador():
     '''
@@ -84,7 +97,7 @@ def panelAdministrador():
         return redirect(url_for("loginAdministrador"))
     
 
-
+#Ingreso para el administrador
 @app.route("/loginAdministrador")
 def loginAdministrador():
     '''
@@ -92,6 +105,7 @@ def loginAdministrador():
     '''
     return render_template("layouts/loginAdministrador.html")
 
+#Ruta y función para validar el admministrador
 @app.route("/validarA", methods=["POST"])
 def validarA():
     if(request.method == "POST"):
@@ -106,23 +120,28 @@ def validarA():
             return redirect(url_for('loginAdministrador'))
 
 
+#Lista de los permisos
 @app.route('/listaPermisos')
 def listaPermisos():
     permisos = MONGO.mostrarPermisos()
     return render_template("layouts/tablaPermisos.html", permisos = permisos)
 
+
+#Lista de los roles
 @app.route('/listaRoles')
 def listaRoles():
     roles = MONGO.mostrarRoles()
     return render_template("layouts/tablaRoles.html", roles = roles)
 
 
+#Página de registro de persona
 @app.route('/registroPersona')
 def registro():
     roles  = MONGO.mostrarRoles()
     return render_template("layouts/registroPersona.html", roles = roles)
 
 
+#REGISTRO DE AULA
 @app.route('/registroAula')
 def registroAula():
 
@@ -142,20 +161,29 @@ def regA():
             return redirect(url_for('registroAula'))
     
 
+# MATRICULACIÓN
 
 @app.route('/matricularEstudiante')
 def matricularEstudiante():
+    personas = MONGO.mostrarPersonas()
+    aulas = MONGO.mostrarAulas()
+    return render_template("layouts/matriculacion.html", personas = personas, aulas = aulas)
 
-    return render_template("layouts/matriculacion.html")
+
 
 @app.route('/matricular', methods=["POST"])
 def matricular():
     if(request.method == "POST"):
+        id = request.form["id"]
+        aula = request.form["aula"]
+        fechaHoy = date.today()
+        f_matricula = fechaHoy.strftime("%d/%m/%Y")
 
 
         return redirect(url_for('matricularEstudiante'))
 
 
+#CREACION USUARIO
 
 @app.route('/ingreso', methods=['POST'])
 def ingreso():
@@ -171,15 +199,20 @@ def ingreso():
         contrasenia = request.form['contrasenia']
         rol = request.form['rol']
         try:
-            MONGO.creacionUsuario(id,nombre,apellido,f_nac,telefono,email,usuario,contrasenia,rol)
-            return redirect(url_for('registro'))
+            if(id == "" or nombre == "" or apellido == "" or f_nac == "" or email == "" or usuario == "" or contrasenia == ""):
+                MONGO.creacionUsuario(id,nombre,apellido,f_nac,telefono,email,usuario,contrasenia,rol)
+                return redirect(url_for('registro'))
+            else:
+                flash("Existen campos vacíos")
+                return redirect(url_for('registro'))
         except:
             flash("Existe un inconveniente, y no se pudo ingresar")
             print("No se pudo ingresar")
             return redirect(url_for('registro'))
 
         
-    
+#REGISTRO AÑO LECTIVO
+
 @app.route('/registroAnioLectivo')
 def registroAnioLectivo():
 

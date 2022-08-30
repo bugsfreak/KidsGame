@@ -18,58 +18,53 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title">Matriculación</h2>
-                    <form method="POST" action="/ingreso">
+                    <form method="POST" action="/matricular">
                         <div class="row row-space">
+                            
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">ID Estudiante </label>
-                                    <input class="input--style-4" name="id" type="text" name="first_name">
+                                    <label class="label" style="margin-right: 30px;">ID Estudiante </label>
+                                    <div class="input-group-icon">
+                                        <select class="form-select" aria-label="Default select example">
+                                        {% for persona in personas %}
+                                            <option>{{persona["_id"]}}</option>
+                                        {% endfor %}
+                                        </select>
+                                        
+                                    </div>
                                 </div>
                             </div>
+                            
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label"> </label>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label"> </label>
+                                    
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Aula </label>
+                                    <label class="label" style="margin-right: 30px;">Aula: </label>
                                     <div class="input-group-icon">
                                         <select class="form-select" aria-label="Default select example">
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            {% for aula in aulas %}
+                                            <option>{{aula["nombre"]}}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Email</label>
-                                    <input class="input--style-4" type="email" name="email">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Celular</label>
-                                    <input class="input--style-4" type="text" name="telefono">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <div class="col-2">
-                                        <div class="input-group">
-                                            <label class="label">Usuario</label>
-                                            <input class="input--style-4" type="text" name="usuario">
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Contraseña</label>
-                                    <input class="input--style-4" type="password" name="contrasenia">
-                                </div>
-                            </div>
-                        </div>
+            
                         </div>
 
                         <!--
@@ -88,14 +83,14 @@
                          -->
                         <div class="flashes">
                             {% for message in get_flashed_messages() %}
-                             <h4 style="color: red;"> {{ message }} </h4> 
+                            <h4 style="color: red;"> {{ message }} </h4>
                             {% endfor %}
                         </div>
 
                         <div class="p-t-15">
                             <button class="btn btn--blue" type="submit">Guardar</button>
-                        </div> 
-                       
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -107,7 +102,7 @@
     </div>
 
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
         integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
         crossorigin="anonymous"></script>
@@ -119,5 +114,6 @@
     <script src="{{ url_for('static', filename='js/registroPersona.js') }}"></script>
 
 </body>
+
 </html>
 <!-- end document-->
